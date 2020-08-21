@@ -1,0 +1,149 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Code Documentation &#8212; FuzzPact 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Project Description" href="project.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-fuzzPact">
+<span id="code-documentation"></span><h1>Code Documentation<a class="headerlink" href="#module-fuzzPact" title="Permalink to this headline">¶</a></h1>
+<p>Assumption: The character set MUST be common!
+* There is no legitimate way of having a fuzzy matching between characters that we know of.
+* Either 2 characters are same or they’re different.
+* To compare documents from languages that have a difference of only few characters, the user is adviced to provide the union of the 2 alphabet as the “charset”.</p>
+<dl class="class">
+<dt id="fuzzPact.fuzzyBlend">
+<em class="property">class </em><code class="descclassname">fuzzPact.</code><code class="descname">fuzzyBlend</code><span class="sig-paren">(</span><em>scoringFunctionList</em>, <em>weightList</em>, <em>fractionOfThresh=None</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyBlend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blends scoring mechanisms by taking the weighted averages of their return values</p>
+<p>Sets up a blend which is the scoring function used , the weightages of each of the scoring functions and their respective threshold values</p>
+<dl class="method">
+<dt id="fuzzPact.fuzzyBlend.callBlend">
+<code class="descname">callBlend</code><span class="sig-paren">(</span><em>l1</em>, <em>l2</em>, <em>model</em>, <em>id</em>, <em>thresh</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyBlend.callBlend" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculates the final similarity score based on the blend values and the weightages provided</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fuzzPact.fuzzyFuncs">
+<em class="property">class </em><code class="descclassname">fuzzPact.</code><code class="descname">fuzzyFuncs</code><a class="headerlink" href="#fuzzPact.fuzzyFuncs" title="Permalink to this definition">¶</a></dt>
+<dd><p>implement your fuzzy functions here.</p>
+<dl class="method">
+<dt id="fuzzPact.fuzzyFuncs.fuzzyJaccard">
+<code class="descname">fuzzyJaccard</code><span class="sig-paren">(</span><em>l1</em>, <em>l2</em>, <em>model</em>, <em>id</em>, <em>thresh</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyFuncs.fuzzyJaccard" title="Permalink to this definition">¶</a></dt>
+<dd><p>the famous jaccard similarity index but with fuzziness introduced</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="fuzzPact.fuzzyFuncs.fuzzyLevenshtein">
+<code class="descname">fuzzyLevenshtein</code><span class="sig-paren">(</span><em>l1</em>, <em>l2</em>, <em>model</em>, <em>id</em>, <em>thresh</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyFuncs.fuzzyLevenshtein" title="Permalink to this definition">¶</a></dt>
+<dd><p>the famous Levenshtein distance but now with fuzziness into the picture</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fuzzPact.fuzzyLevel">
+<em class="property">class </em><code class="descclassname">fuzzPact.</code><code class="descname">fuzzyLevel</code><span class="sig-paren">(</span><em>scoringFunction</em>, <em>threshold</em>, <em>l1</em>, <em>l2</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>class which defines the current layer</p>
+<p>initializes the parameters for one layer like the scoring function and its threshold . Also the tables are initialized to zeros here.</p>
+<dl class="method">
+<dt id="fuzzPact.fuzzyLevel.compute">
+<code class="descname">compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyLevel.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>main functional loop wherein the lookup tables comprising of variuos scores is generated using the lookup tables of the previous layers .</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="fuzzPact.fuzzyModel">
+<em class="property">class </em><code class="descclassname">fuzzPact.</code><code class="descname">fuzzyModel</code><span class="sig-paren">(</span><em>charset</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Main class</strong> which initializes the parameters of the whole model including the <strong>character set,lookup tables and the levels</strong>.</p>
+<p>intializes the <em>parameters</em> of the model</p>
+<dl class="method">
+<dt id="fuzzPact.fuzzyModel.addLevel">
+<code class="descname">addLevel</code><span class="sig-paren">(</span><em>level</em><span class="sig-paren">)</span><a class="headerlink" href="#fuzzPact.fuzzyModel.addLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>method adds a new <em>layer</em> to the existing model and also sets the layer id as the next number in the list of <em>ids</em> already generated</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="project.html" title="previous chapter">Project Description</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Impact.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
